@@ -41,6 +41,7 @@ var currentCat = cats[0];
 function incrementCounter() {
     currentCat.clickCount++;
     catView.render();
+    catListView.render();
 }
 
 var catView = {
@@ -61,13 +62,17 @@ var catListView = {
             // make a new cat list item, and append it
             var cat = cats[i];
             var elem = document.createElement('li');
-            elem.textContent = cat.name;
+            var text = cat.name;
+            if (cat.clickCount > 0) {
+                 text += ' (' + cat.clickCount + ')';
+            }
+            elem.textContent = text;
             elem.addEventListener('click', (function(cat) {
                 return function() {
                     currentCat = cat;
                     catView.render();
                 };
-            })(cat))
+            })(cat));
             catListElem.appendChild(elem);
         };
     }

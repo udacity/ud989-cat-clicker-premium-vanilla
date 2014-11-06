@@ -5,6 +5,9 @@ var countElem = document.getElementById('cat-count');
 
 var catListElem = document.getElementById('cat-list');
 
+
+/* ======= Model ======= */
+
 var cats = [{
     clickCount : 0,
     name : 'Tabby',
@@ -38,11 +41,8 @@ var cats = [{
 
 var currentCat = cats[0];
 
-function incrementCounter() {
-    currentCat.clickCount++;
-    catView.render();
-    catListView.render();
-}
+
+/* ======= View ======= */
 
 var catView = {
     render: function() {
@@ -63,9 +63,6 @@ var catListView = {
             var cat = cats[i];
             var elem = document.createElement('li');
             var text = cat.name;
-            if (cat.clickCount > 0) {
-                 text += ' (' + cat.clickCount + ')';
-            }
             elem.textContent = text;
             elem.addEventListener('click', (function(cat) {
                 return function() {
@@ -76,6 +73,14 @@ var catListView = {
             catListElem.appendChild(elem);
         };
     }
+}
+
+
+/* ======= Glue ======= */
+
+function incrementCounter() {
+    currentCat.clickCount++;
+    catView.render();
 }
 
 // attach event listeners

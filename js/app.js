@@ -84,7 +84,7 @@ var catView = {
         this.countElem = document.getElementById('cat-count');
 
         // on click, increment the current cat's counter
-        this.catImageElem.addEventListener('click', function(e){
+        this.catImageElem.addEventListener('click', function(){
             octopus.incrementCounter();
         });
 
@@ -96,10 +96,10 @@ var catView = {
         // update the DOM elements with values from the current cat
         var currentCat = octopus.getCurrentCat();
         this.countElem.textContent = currentCat.clickCount;
-        this.catNameElem.textContent = currentCat.name
+        this.catNameElem.textContent = currentCat.name;
         this.catImageElem.src = currentCat.imgSrc;
     }
-}
+};
 
 var catListView = {
 
@@ -112,6 +112,7 @@ var catListView = {
     },
 
     render: function() {
+        var cat, elem, i;
         // get the cats we'll be rendering from the octopus
         var cats = octopus.getCats();
 
@@ -119,29 +120,29 @@ var catListView = {
         this.catListElem.innerHTML = '';
 
         // loop over the cats
-        for (var i = 0; i < cats.length; i++) {
+        for (i = 0; i < cats.length; i++) {
             // this is the cat we're currently looping over
-            var cat = cats[i];
+            cat = cats[i];
 
             // make a new cat list item and set its text
-            var elem = document.createElement('li');
+            elem = document.createElement('li');
             elem.textContent = cat.name;
 
             // on click, setCurrentCat and render the catView
             // (this uses our closure-in-a-loop trick to connect the value
             //  of the cat variable to the click event function)
-            elem.addEventListener('click', (function(cat) {
+            elem.addEventListener('click', (function(catCopy) {
                 return function() {
-                    octopus.setCurrentCat(cat);
+                    octopus.setCurrentCat(catCopy);
                     catView.render();
                 };
             })(cat));
 
             // finally, add the element to the list
             this.catListElem.appendChild(elem);
-        };
+        }
     }
-}
+};
 
 // make it go!
 octopus.init();

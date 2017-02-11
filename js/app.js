@@ -112,7 +112,6 @@ var catListView = {
     },
 
     render: function() {
-        var cat, elem, i;
         // get the cats we'll be rendering from the octopus
         var cats = octopus.getCats();
 
@@ -120,12 +119,9 @@ var catListView = {
         this.catListElem.innerHTML = '';
 
         // loop over the cats
-        for (i = 0; i < cats.length; i++) {
-            // this is the cat we're currently looping over
-            cat = cats[i];
-
+        cats.forEach(function(cat) {
             // make a new cat list item and set its text
-            elem = document.createElement('li');
+            var elem = document.createElement('li');
             elem.textContent = cat.name;
 
             // on click, setCurrentCat and render the catView
@@ -140,7 +136,7 @@ var catListView = {
 
             // finally, add the element to the list
             this.catListElem.appendChild(elem);
-        }
+        }, this);
     }
 };
 
